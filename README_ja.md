@@ -1,0 +1,212 @@
+<!--
+SPDX-FileCopyrightText: 2026 TSUKUMO Akito <tsukumoakito99@duck.com>
+SPDX-License-Identifier: MIT
+-->
+
+<p align="center">
+  <img src="doc/zind_logo.svg" width="100%" alt="Zind Logo">
+</p>
+
+# Zind (Zig Structural API Indexer)
+
+**Zind** は、急速に進化を続ける Zig 言語のための **「動的・構造的 API 字引き」** ツールです。
+
+Zig 0.13 から 0.15、そして 0.16.0 へと至る破壊的変更と標準ライブラリの再編の中で、既存のドキュメントや Web 上の情報はしばしば「過去の真実」となります。Zind は、外部のインデックスに頼らず、**「今、あなたのシステムにインストールされている Zig ソースコード（唯一の真実）」**を AST（抽象構文木）レベルで直接解析し、その論理構造を即座に可視化します。
+
+[English README available here](./README.md)
+
+---
+
+## レポジトリ・ステータス
+
+Zind は開発者のプライバシーと独占されない技術基盤を尊重し、**Codeberg** をメインの拠点としています。
+
+- **メインレポジトリ (Source of Truth)**: [codeberg.org/tsukumoakito/zind](https://codeberg.org/tsukumoakito/zind)
+  - Issue 管理、プルリクエスト、Wiki、議論はすべてこちらで行われます。
+- **ミラーレポジトリ**: [github.com/tsukumoakito/zind](https://github.com/tsukumoakito/zind)
+  - 広報およびバイナリ配布（Releases）のための鏡像です。
+
+---
+
+## 導入手順
+
+Zind は Zig で書かれており、標準的な `zig build` ワークフローで導入可能です。
+
+### 1. ソースからのビルドとインストール
+
+バイナリ、man ページ、およびドキュメントを手動でインストールする場合の手順です。
+
+```bash
+# リポジトリをクローン
+git clone https://codeberg.org/tsukumoakito/zind.git
+cd zind
+
+# リリースモードでビルド (推奨: ReleaseSafe)
+zig build -Doptimize=ReleaseSafe
+
+# 1. バイナリのインストール
+sudo cp zig-out/bin/zind /usr/local/bin/
+
+# 2. man ページのインストール（ビルド時に scdoc が必要）
+sudo mkdir -p /usr/local/share/man/man1
+sudo cp zig-out/share/man/man1/zind.1 /usr/local/share/man/man1/
+
+# 3. マニュアルとライセンスのインストール
+sudo mkdir -p /usr/local/share/doc/zind
+sudo mkdir -p /usr/local/share/licenses/zind
+sudo cp zig-out/doc/*.md /usr/local/share/doc/zind/
+sudo cp LICENSE /usr/local/share/licenses/zind/
+```
+
+### 2. Arch Linux および派生ディストリビューション (AUR)
+
+Arch Linux またはその派生ディストリビューション（Manjaro, EndeavourOS 等）を使用している場合は、**AUR (Arch User Repository)** からインストールするのが最も確実です。
+
+| パッケージ | バージョン | 説明 | 投票数 | リンク |
+| :--- | :--- | :--- | :--- | :--- |
+| **zind** | ![AUR version](https://img.shields.io/aur/version/zind) | Zig 向け動的構造的 API インデクサー | ![AUR votes](https://img.shields.io/aur/votes/zind) | [![AUR](https://img.shields.io/badge/AUR-パッケージ-orange)](https://aur.archlinux.org/packages/zind) [![ライセンス](https://img.shields.io/aur/license/zind)](./LICENSE) |
+
+AUR ヘルパーを使用してインストール：
+
+```bash
+# yay を使用する場合
+yay -S zind
+
+# paru を使用する場合
+paru -S zind
+```
+
+## システム環境への適応
+
+Zind は実行環境を自動的にスキャンし、最適な設定を選択します。
+
+- **Zvm / 標準 Zig への対応**:
+  システムに `zig` コマンドが存在すれば、その実行バイナリに紐付いた標準ライブラリ（`std`）のパスを自動的に特定します。**これには `zvm`、`mise`、`asdf` などのバージョン管理ツールを使用している場合も含まれます（`zig` バイナリが適切に PATH へエクスポートされている必要があります）。**
+- **任意の Zig バージョン・パッケージの解析**:
+  `--std-path` フラグを使用することで、システム標準以外の Zig や、特定のローカルパッケージを解析対象として指定できます。
+- **表示言語の明示的な設定**:
+  `--lang <en|ja>` を使用することで、環境変数（`LC_ALL`, `LC_MESSAGES`, `LANG`）に基づく自動判定を上書きできます。
+  ※技術的な識別子との整合性を保つため、ローカライズはヘルプメッセージとドキュメントに限定されています。解析結果の出力は英語ベースとなります。
+
+  ```bash
+  # 特定のZigバージョンの標準ライブラリ内を検索
+  zind --std-path /path/to/zig-0.16.0/lib/std --search ArrayList
+  ```
+
+---
+
+## ドキュメント
+
+- **man ページ**: Unix/Linux/macOS ユーザーは、ターミナルで `man zind` を実行することでローカルドキュメントを参照できます。
+- **ビルド済み環境での場所**: ビルドを実行すると、`zig-out/doc/` にも同じ内容の説明書がコピーされます。`man` が使えない環境（Windows等）ではこちらを直接参照してください。
+- **詳細マニュアル (リポジトリ版)**: ブラウザで閲覧したい場合や、ソースとして確認したい場合は以下を参照してください：
+  - [取扱説明書 (日本語版)](./doc/MANUAL_ja.md)
+  - [取扱説明書 (英語版)](./doc/MANUAL.md)
+
+---
+
+## 公式リソース
+
+Zind はサードパーティ製の探索ツールです。標準ツールチェインおよび公式ドキュメントについては、以下を参照してください：
+
+- **Zig ツールチェイン**: ターミナルで `zig help` を実行して、標準コマンドの一覧を確認してください。
+- **公式サイト**: [https://ziglang.org/](https://ziglang.org/) — Zig コミュニティおよび言語仕様に関する決定版ポータルサイトです。
+
+---
+
+## プロジェクトの目的：Zig 開発者のための「道標」
+
+Zig 開発において、最も正確なドキュメントは常にソースコードそのものです。しかし、標準ライブラリの迷宮から目的の定義を探し出すのは、初心者のみならず熟練者にとって容易ではありません。
+
+Zind は以下の 3 つを達成するために開発されました：
+
+1. **情報の賞味期限からの解放**: バージョンアップのたびに変わる Namespace（例: `std.os` から `std.posix` への移行）を、FQN（完全修飾名）ベースで即座に特定。
+2. **実装の系譜の可視化**: 単なるエイリアスなのか、ラッパー関数なのか、あるいは特定の型を生成するファクトリなのか。その実体（Ground Truth）に至るまでの系譜を追跡。
+3. **条件付き定義の即時判別**: OS やアーキテクチャによって切り替わる複雑な定義を、実行環境や指定されたターゲットに合わせてフィルタリング。
+
+---
+
+## 主要なオプション詳細
+
+### 1. スコープと階層の制御
+
+- `--scope <namespace>`
+  特定の名前空間（例：`std.mem,std.fs`）に限定してインデックスを生成。
+- `--depth <N|unlimited>`
+  再帰的に探索する深さを指定。`0` は対象のみ、`unlimited` は配下の全メンバーを網羅。
+- `--depth-scope <N> <scope>`
+  特定のスコープに対して、ピンポイントで探索深度を指定するアトミックなフラグ。
+- `--top-level` / `--top-level-sub`
+  主要な Namespace の直下メンバー、またはその 1 段階下までを素早く確認するプリセット。
+
+### 2. 探索と深掘（Deep Inspection）
+
+- `--search <keywords>`
+  FQN、ドキュメントコメント、定数の値などを対象にキーワード検索を実行。
+- `--probe <fqn>`
+  特定の FQN を狙い撃ちし、実装系譜と実際のソースコード・スニペットを抽出。
+- `--flagged-deprecated`
+  ソース内で `Deprecated`（非推奨）とマークされているシンボルのみを抽出。
+
+### 3. 環境の擬似評価
+
+- `--target-os <os>` / `--target-arch <arch>`
+  現在のホストとは異なるプラットフォームでの API 定義をシミュレート。
+- `--libc` / `--no-libc`
+  C ライブラリのリンク有無による条件付きコンパイルパスを切り替え。
+
+---
+
+## 実験的機能 / ロードマップ (Project Mode)
+
+以下のオプションは現在開発ロードマップに含まれています。`v1.0.0` においては、これらを使用すると警告が表示され、実装待ちのため解析が中断されます。
+
+- `--mode project`
+  実験的なプロジェクトローカル・シンボルインデックス作成を有効化。
+- `--include <file1,...>` / `--exclude <file1,...>`
+  プロジェクト解析対象のホワイトリスト・ブラックリスト指定。
+- `--skeleton`
+  論理階層およびコールグラフのスケルトン生成。
+- `--users <symbol>`
+  特定シンボルのすべての参照および呼び出し箇所のリスト化。
+- `--trace-up <symbol>`
+  ターゲットからエントリポイントへのロジック伝播追跡。
+
+---
+
+## 出力形式のルール（文法の解釈）
+
+Zind の出力は、最小限の行数で最大限の実装セマンティクスを伝えるよう設計されています。
+
+- **系譜の追跡 (`>>>`)**
+  `A = B >>> C`
+  シンボル A の実態が B であり、最終的に C として定義されていることを提示。
+- **条件付き定義 (`[...]`)**
+  `std.posix.Stat [native_os is linux] = ...`
+  その定義が有効になる条件（OS、Arch、ビルドオプション等）を明示。
+- **隠匿項目の計数**
+  - `(+n items)`: 公開（pub）されているが、深度設定により表示を省略したメンバー数。
+  - `{+n items}`: 内部実装（private）のメンバー数。構造体の重厚さを示す指標。
+
+---
+
+## ライセンス
+
+Zind は **MIT ライセンス** の下で公開されています。
+個人利用・商用利用を問わず、著作権表示および許諾表示を保持する限り、自由に使用、改変、配布することが可能です。
+
+全文については [LICENSE](./LICENSE) ファイルを参照してください。
+
+## サポート & コンサルティング
+
+Zig 0.16.0 を用いたインフラ構築、カスタム機能の開発、または Zind のシステム統合に関する専門的なサポートが必要な場合は、こちらまでお問い合わせください: [tsukumoakito99@duck.com](mailto:tsukumoakito99@duck.com)
+
+---
+
+## 高度な文脈理解のために
+
+Zind が出力する高密度な構造化テキストは、人間が理解しやすい「字引き」である以上の役割を持ちます。それは、**「構造的な意味論（Structural Semantics）」**を極めて低い情報コストで伝達するための特殊なプロトコルとして機能します。
+
+高度な静的解析エンジンや、実装の意図を吸収（インジェスト）するように設計されたシステムなど、セマンティック解析やコンテキストの圧縮を必要とする現代的なワークフローにおいて、Zind は最小のトークン消費で「言語実装の全容」を注入するための強力なインターフェースとなります。
+
+熟練した開発者の目にとって、この出力は単なるテキストではなく、一つの「地図」に他なりません。

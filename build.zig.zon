@@ -1,0 +1,17 @@
+.{
+    .name = .zind,
+    .version = "1.0.6",
+    .release_date_unix = "1787257245",
+    .fingerprint = 0xd3618c234c97e801,
+    .minimum_zig_version = "0.16.0",
+    .dependencies = .{},
+    .paths = .{
+        "build.zig",
+        "build.zig.zon",
+        "src",
+        "doc",
+        "LICENSE",
+        "README.md",
+        "README_ja.md",
+    },
+}
