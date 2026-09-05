@@ -30,32 +30,25 @@ Zind respects developer privacy and decentralized technical infrastructure. **Co
 
 ## Installation
 
-Zind is written in Zig and follows the standard `zig build` workflow.
+Zind is written in Zig and provides a Makefile to automate the standard `zig build` workflow and system integration.
 
 ### 1. Build and Install (Source)
 
-To build and install the binary, man pages, and documentation manually:
+To build and install the binary, man pages, and documentation to your system:
 
 ```bash
 # Clone the repository
 git clone https://codeberg.org/tsukumoakito/zind.git
 cd zind
 
-# Build in release mode (Recommended: ReleaseSafe)
-zig build -Doptimize=ReleaseSafe
+# 1. Build the binary (checks for Zig 0.16.0)
+make build
 
-# 1. Install the binary
-sudo cp zig-out/bin/zind /usr/local/bin/
+# 2. Install to system (/usr/bin, /usr/share/man, etc.)
+sudo make install
 
-# 2. Install man pages (Requires 'scdoc' at build time)
-sudo mkdir -p /usr/local/share/man/man1
-sudo cp zig-out/share/man/man1/zind.1 /usr/local/share/man/man1/
-
-# 3. Install manuals and license
-sudo mkdir -p /usr/local/share/doc/zind
-sudo mkdir -p /usr/local/share/licenses/zind
-sudo cp zig-out/doc/*.md /usr/local/share/doc/zind/
-sudo cp LICENSE /usr/local/share/licenses/zind/
+# 3. Uninstall from system
+sudo make uninstall
 ```
 
 ### 2. Arch Linux & Derivatives (AUR)
@@ -75,6 +68,8 @@ yay -S zind
 # Using paru
 paru -S zind
 ```
+
+---
 
 ## Environment Adaptation
 
@@ -159,7 +154,7 @@ Zind was developed to achieve three core goals:
 
 ## EXPERIMENTAL / ROADMAP (Project Mode)
 
-The following options are part of the Project Mode development roadmap. In `v1.0.0`, using these will display a warning and terminate the analysis as they are not yet available.
+The following options are part of the Project Mode development roadmap. In the current version, using these will display a warning and terminate the analysis as they are not yet available.
 
 - `--mode project`
   Enable experimental project-local symbol indexing.

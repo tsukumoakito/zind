@@ -30,32 +30,25 @@ Zind は開発者のプライバシーと独占されない技術基盤を尊重
 
 ## 導入手順
 
-Zind は Zig で書かれており、標準的な `zig build` ワークフローで導入可能です。
+Zind は Zig で書かれており、標準的な `zig build` ワークフローとシステムへの統合を自動化するための Makefile を提供しています。
 
 ### 1. ソースからのビルドとインストール
 
-バイナリ、man ページ、およびドキュメントを手動でインストールする場合の手順です。
+バイナリ、man ページ、およびドキュメントをシステムにインストールする手順は以下の通りです。
 
 ```bash
 # リポジトリをクローン
 git clone https://codeberg.org/tsukumoakito/zind.git
 cd zind
 
-# リリースモードでビルド (推奨: ReleaseSafe)
-zig build -Doptimize=ReleaseSafe
+# 1. バイナリのビルド (Zig 0.16.0 のバージョンチェックを含む)
+make build
 
-# 1. バイナリのインストール
-sudo cp zig-out/bin/zind /usr/local/bin/
+# 2. システムへのインストール (/usr/bin, /usr/share/man 等)
+sudo make install
 
-# 2. man ページのインストール（ビルド時に scdoc が必要）
-sudo mkdir -p /usr/local/share/man/man1
-sudo cp zig-out/share/man/man1/zind.1 /usr/local/share/man/man1/
-
-# 3. マニュアルとライセンスのインストール
-sudo mkdir -p /usr/local/share/doc/zind
-sudo mkdir -p /usr/local/share/licenses/zind
-sudo cp zig-out/doc/*.md /usr/local/share/doc/zind/
-sudo cp LICENSE /usr/local/share/licenses/zind/
+# 3. システムからのアンインストール
+sudo make uninstall
 ```
 
 ### 2. Arch Linux および派生ディストリビューション (AUR)
@@ -75,6 +68,8 @@ yay -S zind
 # paru を使用する場合
 paru -S zind
 ```
+
+---
 
 ## システム環境への適応
 
@@ -159,7 +154,7 @@ Zind は以下の 3 つを達成するために開発されました：
 
 ## 実験的機能 / ロードマップ (Project Mode)
 
-以下のオプションは現在開発ロードマップに含まれています。`v1.0.0` においては、これらを使用すると警告が表示され、実装待ちのため解析が中断されます。
+以下のオプションは現在開発ロードマップに含まれています。現行バージョンにおいては、これらを使用すると警告が表示され、実装待ちのため解析が中断されます。
 
 - `--mode project`
   実験的なプロジェクトローカル・シンボルインデックス作成を有効化。

@@ -1,4 +1,4 @@
-zind(1) "1.0.7" "Zind User Manual"
+zind(1) "1.0.8" "Zind User Manual"
 
 # NAME
 
