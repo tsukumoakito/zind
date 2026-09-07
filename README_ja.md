@@ -9,11 +9,14 @@ SPDX-License-Identifier: MIT
 
 # Zind (Zig Structural API Indexer)
 
+[English version available here (英語版のREADMEはこちら)](./README.md)
+
+[![Zig Version](https://img.shields.io/badge/Zig-0.16.0-orange.svg)](https://ziglang.org)
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
+
 **Zind** は、急速に進化を続ける Zig 言語のための **「動的・構造的 API 字引き」** ツールです。
 
 Zig 0.13 から 0.15、そして 0.16.0 へと至る破壊的変更と標準ライブラリの再編の中で、既存のドキュメントや Web 上の情報はしばしば「過去の真実」となります。Zind は、外部のインデックスに頼らず、**「今、あなたのシステムにインストールされている Zig ソースコード（唯一の真実）」**を AST（抽象構文木）レベルで直接解析し、その論理構造を即座に可視化します。
-
-[English README available here](./README.md)
 
 ---
 

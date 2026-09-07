@@ -1,7 +1,7 @@
 .{
     .name = .zind,
-    .version = "1.0.9",
-    .release_date_unix = "1788662557",
+    .version = "1.0.10",
+    .release_date_unix = "1788768307",
     .fingerprint = 0xd3618c234c97e801,
     .minimum_zig_version = "0.16.0",
     .dependencies = .{},

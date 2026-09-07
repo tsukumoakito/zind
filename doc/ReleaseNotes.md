@@ -3,12 +3,12 @@ SPDX-FileCopyrightText: 2026 TSUKUMO Akito <tsukumoakito99@duck.com>
 SPDX-License-Identifier: MIT
 -->
 
-# v1.0.9: Precision AST Indexing
+# v1.0.10: Precision AST Indexing
 
-We are pleased to announce the release of **Zind v1.0.9**.
+We are pleased to announce the release of **Zind v1.0.10**.
 This version marks a significant strategic milestone, ensuring that the ground truth of Zig 0.16.0 is accessible to all developers.
 
-> **Note:** This release (v1.0.9) includes a critical documentation patch for the manual pages, updating versioning and metadata alongside the major license transition.
+> **Note:** This release (v1.0.10) includes a critical documentation patch for the manual pages, updating versioning and metadata alongside the major license transition.
 
 ## 🚀 Major Change: Transition to MIT License
 
@@ -35,11 +35,11 @@ If you require professional integration, or custom feature development, please r
 
 ---
 
-**Zind v1.0.9 リリースのお知らせ**
+**Zind v1.0.10 リリースのお知らせ**
 
 このバージョンは、Zig 0.16.0 のソースコード解析をすべての開発者にとってより身近なものにするための、重要な戦略的マイルストーンとなります。
 
-> **補足:** 本リリース(v1.0.9)では、ライセンス移行に伴うマニュアル内のバージョン表記および日付の修正（パッチ）が含まれています。
+> **補足:** 本リリース(v1.0.10)では、ライセンス移行に伴うマニュアル内のバージョン表記および日付の修正（パッチ）が含まれています。
 
 ## 🚀 主要な変更：MITライセンスへの移行
 

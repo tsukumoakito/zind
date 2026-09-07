@@ -3,7 +3,7 @@ SPDX-FileCopyrightText: 2026 TSUKUMO Akito <tsukumoakito99@duck.com>
 SPDX-License-Identifier: MIT
 -->
 
-# Zind 取扱説明書 (v1.0.9 / 2026-09-06)
+# Zind 取扱説明書 (v1.0.10 / 2026-09-07)
 
 **Zind** - Zig 向け動的構造的 API インデクサー
 
